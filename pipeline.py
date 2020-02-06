@@ -6,7 +6,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.metrics import roc_auc_score, roc_curve, jaccard_score
+from sklearn.model_selection import GridSearchCV
 
 class vector_comparison:
     
@@ -25,12 +26,18 @@ class vector_comparison:
         self.df = data
 
         
-    def split_data(self,X_label, y_label):
+    def split_data(self,X_label, y_label, test = False):
         '''
         splits data into train and test set for model validation.
         '''
+        
         X = self.df[X_label]
         y = self.df[y_label]
+        
+        if test:
+            self.X_test = X
+            self.y_test = y
+            return self.X_test, self.y_test
                         
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
         self.fitting_text = X_train['question1'].values +' '+X_train['question2']
@@ -52,6 +59,14 @@ class vector_comparison:
         self.X_train_vector = self.tfidf_fit.transform(self.fitting_text).toarray()
         
         
+    def fit_count(self, stopwords = None, ngram_range = (1,1), max_df = 1, min_df = 1, max_features = None):
+        #assumes data split.
+        self.count = CountVectorizer(stop_words = stopwords, ngram_range =ngram_range, max_df = max_df, 
+                                     min_df = min_df, max_features = max_features)
+        self.count_fit = self.count.fit(self.fitting_text)
+        self.X_train_vector = self.count_fit.transform(self.fitting_text).toarray()
+        
+        
     def fit_pca(self, n_components = 1):
         #input are the vectors from tfidf
         
@@ -66,12 +81,16 @@ class vector_comparison:
 
     def transform_pca(self, column):
         #assumes pca has been fit.        
-        return self.pca_fit(column).toarray()
+        return self.pca_fit.transform(column)
+    
+    def transform_count(self, column):
+        return self.count_fit.transform(column).toarray()
     
     
     def compute_cosine_similarity(self, arr1, arr2):
         # computes the cosine similarity between each vector in arr1 and arr2. Assumes arr1 and arr2 
         # are equal length and that each vector is of the same dimensionality.
+        
         output = []
 
         for i in range(len(arr1)):
@@ -80,11 +99,14 @@ class vector_comparison:
         return output
     
     
-    def compute_jiccard_distance(self, arr1, arr2):
+    def compute_jaccard_similarity(self, arr1, arr2, average = None):
+        # computes the cosine similarity between each vector in arr1 and arr2. Assumes arr1 and arr2 
+        # are equal length and that each vector is of the same dimensionality.
+     
         output = []
 
         for i in range(len(arr1)):
-            output.append(float(cosine_similarity(arr1[i].reshape(1, -1) ,arr2[i].reshape(1, -1) )))
+            output.append(jaccard_score(arr1[i],arr2[i], average = average))
             
         return output
         
@@ -95,7 +117,7 @@ class vector_comparison:
         self.final = self.df.join(self.X_test['results'], how = 'inner', on = self.df.index).drop(columns ='key_0')
         
         
-    def compute_confusion_matrix(self, threshold =0.7):
+    def compute_confusion_matrix(self, threshold = 0.7):
         #assumes that return_df_w_results has been run and self.final exsits        
         threshold = threshold
         correct = 0
@@ -128,6 +150,7 @@ class vector_comparison:
         self.FPR = true_neg / (self.final['is_duplicate'] == False).astype(int).sum()
         self.precision = self.true_pos / (self.true_pos +self.false_pos)
 
+        
     def model_report(self):
         
         self.compute_confusion_matrix()
@@ -165,7 +188,7 @@ class vector_comparison:
         list_thresh = []
         list_TPR = []
         list_FPR = []
-        self.roc_auc_score = roc_auc_score(self.final['is_duplicate'],self.final['results'])
+        self.roc_auc_score = round(roc_auc_score(self.final['is_duplicate'],self.final['results']),5)
         self.fpr, self.tpr, self.thresholds = roc_curve(self.final['is_duplicate'], self.final['results'])
         
    
