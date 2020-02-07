@@ -30,12 +30,15 @@ Here are a few important things to keep in mind about this dataset:
 
 ### Data Preperation
 
+The data was provided in a clean format. It was taken from a csv into pandas dataframe. The 3 / 400,0000 pairs had null values and were dropped
+
 
 ### Modeling
+
+Modeling options include options for vectorization and distance calculations. Vectorization are built ontop of Sklearns TFIDF Vectorization and Count Vectorization. Distance options are cosine simillarity, jaccard distance and euclidian distance.
 
 
 ### Evaluation
 
-
-### Deployment
+The current best model is preforming at a 68% accuracy with Area under ROC of 72%
 
