@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-This is a read me
-
-#test1
-
-## check2
-
-
-
 =======
 # Semantic Equivalence 
 
