@@ -34,13 +34,32 @@ Here are a few important things to keep in mind about this dataset:
 The data was provided in a clean format. It was taken from a csv into pandas dataframe. The 3 / 400,0000 pairs had null values and were dropped
 
 
-### Modeling
+### Neural Networks
+
+#### Word Encoding
+
+The model with the best preformance used pre-trained word vectors. This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: http://www.opendatacommons.org/licenses/pddl/1.0/. Specifically the 300 dimensianl space vectors.
+
+#### Conjoined Networks
+
+![Typical Conjoined Network --placeholder](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+The most successful models were based on what I call joincoined neural networks (the literature calls siamese neural networks). These networks have identical encoding layers and indentical neural netwworks. The seperate paths are conjoined and passed through a layer with distance metric calculations. The tensors are then passed through a dense and drop out layers before output.  
+
+Conjoine model2 keras deployed gated recurrent unit.
+
+### Cosine Similarity Modeling
 
 Modeling options include options for vectorization and distance calculations. Vectorization are built ontop of Sklearns TFIDF Vectorization and Count Vectorization. Distance options are cosine simillarity, jaccard distance and euclidian distance.
 
 
 ### Evaluation
 
-The current best model is preforming at a 68% accuracy with Area under ROC of 72%
+The current best model is the conjoined_model2 preforming at a 78% accuracy with Area under ROC of 90%
+
+This model can be accessed [from my googledrive](https://drive.google.com/file/d/1DYECLvdwC123LthIj0lHL-KjddCuEnKG/view?usp=sharing)
+
+
+### Instructions
 >>>>>>> 7b191deb115be1d440003ff160fa8a49bda6dea8
 
