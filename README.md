@@ -1,4 +1,4 @@
-=======
+
 # Semantic Equivalence 
 
 I became interested in indentifying novel written ideas amoung a many voices. A simple example might be: "The sky is blue" is equivalent to "The color of the sky is blue". Aggregatting ideas reduces distractions related to how an individual idea was poosed. Moreover, aggregation adds insights into the popularity of specific ideas. To tell if two ideas are equivalent is a lofty goal. I starterd with simple one or two sentences from quora. The data consists of pairs of questions generously made availbe by [data.quora.com](https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs)
