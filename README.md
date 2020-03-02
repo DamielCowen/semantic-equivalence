@@ -1,4 +1,4 @@
-=======
+
 # Semantic Equivalence 
 
 I became interested in indentifying novel written ideas amoung a many voices. A simple example might be: "The sky is blue" is equivalent to "The color of the sky is blue". Aggregatting ideas reduces distractions related to how an individual idea was poosed. Moreover, aggregation adds insights into the popularity of specific ideas. To tell if two ideas are equivalent is a lofty goal. I starterd with simple one or two sentences from quora. The data consists of pairs of questions generously made availbe by [data.quora.com](https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs)
@@ -42,7 +42,7 @@ The model with the best preformance used pre-trained word vectors. This data is 
 
 #### Conjoined Networks
 
-![Typical Conjoined Network --placeholder](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Typical Conjoined Network](https://github.com/DamielCowen/semantic-equivalence/blob/master/src/Conjoined_model2.png "Logo Title Text 1")
 
 The most successful models were based on what I call joincoined neural networks (the literature calls siamese neural networks). These networks have identical encoding layers and indentical neural netwworks. The seperate paths are conjoined and passed through a layer with distance metric calculations. The tensors are then passed through a dense and drop out layers before output.  
 
