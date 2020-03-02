@@ -139,6 +139,9 @@ class conjoined():
     def cosine_distance(self,vests):
         '''
         computes cosine_distance in tensor space.
+        
+        inputs: 2 tensors of equal dimensions
+        outputs: 1 tensor layer which computes cosine distances
         '''
         x, y = vests
         x = K.l2_normalize(x, axis=-1)
@@ -146,6 +149,10 @@ class conjoined():
         return -K.mean(x * y, axis=-1, keepdims=True)
 
     def cos_dist_output_shape(self, shapes):
+        '''
+        outputs the shape of the cosine distance tensor.
+        
+        '''
         shape1, shape2 = shapes
         return (shape1[0],1)
 
