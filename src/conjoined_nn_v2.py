@@ -1,3 +1,5 @@
+#3-6-2020 0955
+
 import tensorflow as tf
 keras = tf.keras
 
@@ -31,12 +33,12 @@ class preprocessing():
     def __init__(self):
         print('-/|\-')
     
-    def load_data(self, path='data/training.csv'):
+    def load_data(self, path='../data/training.csv'):
         '''
         Loads data into pandas dataframe. Stores dataframe for access during
         model preprocessing
         '''
-        self.df = pd.read_csv('../data/training.csv', index_col = 0)
+        self.df = pd.read_csv(path, index_col = 0)
         
     def split_data(self, test_size = 0.95):
         '''
@@ -92,6 +94,40 @@ class preprocessing():
         self.seq1_pad_val = pad_sequences(self.seq1_val, maxlen = max_len, padding ='pre')
         self.seq2_pad_val = pad_sequences(self.seq2_val, maxlen = max_len, padding ='pre')
 
+    def prep_demo_questions(self, seq1, seq2, max_len):
+
+        #seq1 = seq1.split()
+        #seq2 = seq2.split()
+        
+
+        seq1, seq2 = self.demo_pad(seq1, seq2, max_len)
+
+        return seq1, seq2
+
+    def demo_pad(self, seq1, seq2, max_len):
+        seq1_pad_needed = max_len - len(list(seq1))
+        seq2_pad_needed = max_len - len(list(seq2))
+    
+        seq1_out = []
+        seq2_out = []
+    
+        for pad in range(seq1_pad_needed):
+            seq1_out.append(0)
+        for value in seq1:
+            seq1_out.append(value)
+            
+
+        for pad in range(seq2_pad_needed):
+            seq2_out.append(0)
+        for value in seq2:
+            seq2_out.append(value)
+        
+        return seq1_out, seq2_out
+    
+                          
+
+    
+
 
     
 class conjoined():
@@ -140,7 +176,7 @@ class conjoined():
         for word, i in self.token.word_index.items():
             
             embeddings_vector = self.embedding_index.get(word)
-            print(word, i, embeddings_vector is not None)
+            #print(word, i, embeddings_vector is not None)
             if embeddings_vector is not None:
                 self.embedding_matrix[i] = embeddings_vector
 
@@ -272,7 +308,7 @@ class conjoined():
 
         model2 = Model([input_1, input_2], out)
 
-        model2.compile(loss="binary_crossentropy", metrics=['acc',tf.keras.metrics.AUC()], optimizer=Adam(0.0001))
+        model2.compile(loss="binary_crossentropy", metrics=['acc',tf.keras.metrics.AUC()], optimizer=Adam(0.01))
         self.model2 =  model2
 
         return model2
@@ -285,7 +321,7 @@ if __name__ == "__main__":
     print('initializing preprocessing')
     pre = preprocessing()
     #load question pairs data
-    path = 'data/training.csv'
+    path = '../Data/training.csv'
     pre.load_data(path)
     print('data loaded')
 
@@ -321,8 +357,18 @@ if __name__ == "__main__":
 
     model2.fit([pre.seq1_pad,pre.seq2_pad],
            pre.y_train.values.reshape(-1,1),
-           epochs = 70, 
+           epochs = 50, 
            batch_size = 500,
            validation_data=(
                [pre.seq1_pad_val,pre.seq2_pad_val],
                pre.y_val.values.reshape(-1,1)))
+
+    save_model_path = '../models/'
+
+    model2.save_weights(f'{save_model_path}model2_weights.h5')
+
+
+    print('saving model history')
+    results_df = pd.DataFrame(model2.history.history)
+    results_df.to_csv(f'{save_model_path}model2_results.csv')
+    print('model history saved. Good bye!')
