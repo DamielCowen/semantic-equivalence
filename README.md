@@ -1,6 +1,6 @@
 This project is a demonstration of advanced natural language processing (NLP) techniques using artificial neural nets in a deep learning model. 
 
-There is an growing number of increasingly successful methods for assigning words to a location in vector space. The logical next step is to attempt this for sentences. This project is a humble step towards that lofty goal in determining if sentences are equivalent.
+There is an growing number of increasingly successful methods for assigning words locations in vector space. The logical next step is to attempt this for sentences. This project is a humble step towards that lofty goal in determining if sentences are equivalent.
 
 # Instructions
 
