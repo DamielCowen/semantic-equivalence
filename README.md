@@ -1,15 +1,26 @@
+This project is a demonstration of advanced natural language processing (NLP) techniques using artificial neural nets in a deep learning model. 
+
+There is an growing number of increasingly successful methods for assigning words locations in vector space. The logical next step is to attempt this for sentences. This project is a humble step towards that lofty goal in determining if sentences are equivalent.
+
+# Instructions
+
+- clone the repo.
+- download dependencies.
+- run src/conjoined_nn_v2.py.
 
 # Semantic Equivalence 
 
-I became interested in indentifying novel written ideas amoung a many voices. A simple example might be: "The sky is blue" is equivalent to "The color of the sky is blue". Aggregatting ideas reduces distractions related to how an individual idea was poosed. Moreover, aggregation adds insights into the popularity of specific ideas. To tell if two ideas are equivalent is a lofty goal. I starterd with simple one or two sentences from quora. The data consists of pairs of questions generously made availbe by [data.quora.com](https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs)
+I became fascinated with NLP and specifically methods to determine the vector description of the word meaning.  I began reviewing literature on unsupervised learning deep learning techniques towards learning global vector representations  of words and found the solutions to be elegant.  Moreover, the product of these efforts, n-dimensional vector representation of words, that organize them in vector space in a natural and logical format are beautiful. I became inspired to get involved. (If not already familiar I highly recommend this [Stanford GloVe paper] (https://nlp.stanford.edu/pubs/glove.pdf) which was a major inspiration for me.)
+
+A next step could be determining the vector representation of sentences. This project is a humble step towards that lofty goal by determining if sentences are equivalent. A simple example might be: "The sky is blue" is equivalent to "The color of the sky is blue". I started with simple one or two sentences quora questions. The data consists of pairs of questions generously made available by [data.quora.com](https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs)
 
 ### Applications
 
-The use case is to streamline customer support by aggregating customer request for help. With the model in production a  business can better assist customers by quickly matching the posed question to a list of pre-answered questions. 
+The practical use case is to streamline customer support by aggregating customer requests for help. With the model in production a business can better assist customers by quickly matching the posed question to a list of pre-answered questions.
 
-Another use case would be for message board type sites. The model can check new posts to exsiting post and determine if equivalent post has been made. This aggregates response in once place for a better user expirence.
+A use case would be for message board type sites. The model can check new posts to existing posts and determine if an equivalent post has been made. This aggregates responses in one place for a better user experience and to facilitate a deeper understanding of what people are discussing on your platform.
 
-### Data Understanding
+### Dataset
 
 The dataset consists of over 400,000 lines of potential question duplicate pairs. Each line contains IDs for each question in the pair, the full text for each question, and a binary value that indicates whether the line truly contains a duplicate pair. Here are a few sample lines of the dataset:
 
@@ -29,24 +40,23 @@ Here are a few important things to keep in mind about this dataset:
 
 - The ground-truth labels contain some amount of noise: they are not guaranteed to be perfect.
 
-### Data Preperation
+### Data Preparation
 
-The data was provided in a clean format. It was taken from a csv into pandas dataframe. The 3 / 400,0000 pairs had null values and were dropped
-
+The data was provided in a clean format. It was taken from a csv into pandas dataframe. The 3 / 400,0000 pairs had null values and were dropped. 
 
 ### Neural Networks
 
 #### Word Encoding
 
-The model with the best preformance used pre-trained word vectors. This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: http://www.opendatacommons.org/licenses/pddl/1.0/. Specifically the 300 dimensianl space vectors.
+The model with the best performance used pre-trained word vectors. This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: http://www.opendatacommons.org/licenses/pddl/1.0/. Specifically the 300 dimensional space vectors.
 
 #### Conjoined Networks
 
 ![Typical Conjoined Network](https://github.com/DamielCowen/semantic-equivalence/blob/master/src/Conjoined_model2.png "Logo Title Text 1")
 
-The most successful models were based on what I call joincoined neural networks (the literature calls siamese neural networks). These networks have identical encoding layers and indentical neural netwworks. The seperate paths are conjoined and passed through a layer with distance metric calculations. The tensors are then passed through a dense and drop out layers before output.  
+The most successful models were based on what I call joincoined neural networks (the literature calls siamese neural networks). These networks have identical encoding layers and identical neural networks. The separate paths are conjoined and passed through a layer with distance metric calculations. The tensors are then passed through a dense and drop out layers before output.  
 
-Conjoine model2 keras deployed gated recurrent unit.
+Conjoined model2 keras deployed gated recurrent unit.
 
 ### Cosine Similarity Modeling
 
@@ -55,11 +65,9 @@ Modeling options include options for vectorization and distance calculations. Ve
 
 ### Evaluation
 
-The current best model is the conjoined_model2 preforming at a 78% accuracy with Area under ROC of 90%
+The current best model is the conjoined_model2 preforming at a 91% accuracy with Area under ROC of 90%
 
 This model can be accessed [from my googledrive](https://drive.google.com/file/d/1DYECLvdwC123LthIj0lHL-KjddCuEnKG/view?usp=sharing)
 
 
-### Instructions
->>>>>>> 7b191deb115be1d440003ff160fa8a49bda6dea8
 
