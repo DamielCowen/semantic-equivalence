@@ -10,7 +10,7 @@ There is an growing number of increasingly successful methods for assigning word
 
 # Semantic Equivalence 
 
-I became fascinated with NLP and specifically methods to determine the vector description of the word meanings.  Unsupervised deep learning techniques for learning global vector representations of words and found the solutions to be elegant.  These techniques create beautiful n-dimensional vector representation of words, organized in a natural and logical way (If not already familiar I highly recommend this [Stanford GloVe paper] (https://nlp.stanford.edu/pubs/glove.pdf) which was a major inspiration for me.)
+I became fascinated with NLP and specifically methods to determine the vector description of the word meanings.  Unsupervised deep learning techniques for learning global vector representations of words and found the solutions to be elegant.  These techniques create beautiful n-dimensional vector representation of words, organized in a natural and logical way (If not already familiar I highly recommend this [Stanford GloVe paper](https://nlp.stanford.edu/pubs/glove.pdf) which was a major inspiration for me.)
 
 Building on this, a next objective could develop a vector representation of entire sentences. Towards this I wanted to construct a model that would determine if sentences are equivalent.For example, we could work to determine if "The sky is blue" is equivalent to "The color of the sky is blue". I started with simple one or two sentences quora questions. The data consists of pairs of questions generously made available by [data.quora.com](https://www.quora.com/q/quoradata/First-Quora-Dataset-Release-Question-Pairs)
 
